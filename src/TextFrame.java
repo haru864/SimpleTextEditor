@@ -3,9 +3,12 @@ import javax.swing.JFrame;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
+import javax.swing.JScrollPane;
 
 import java.awt.Dimension;
 import java.awt.event.*;
+import java.awt.FlowLayout;
+import java.awt.BorderLayout;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -24,7 +27,7 @@ public class TextFrame extends JFrame implements ActionListener, KeyListener {
         this.setTitle("Simple Text Editor");
         setFabicon();
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        this.getContentPane().setPreferredSize(new Dimension(650, 700));
+        // this.getContentPane().setPreferredSize(new Dimension(App.WIDTH, App.HEIGHT));
 
         // メニューバーとボタンを定義
         menuBar = new JMenuBar();
@@ -40,11 +43,18 @@ public class TextFrame extends JFrame implements ActionListener, KeyListener {
         setMenuToBar(fileMenu, itemList);
         itemList = new ArrayList<>(Arrays.asList(setCharColor, setBackgroundColor));
         setMenuToBar(settingMenu, itemList);
+        this.setJMenuBar(menuBar);
+
+        // テキスト入力スペースを作成
+        TextArea testArea = new TextArea();
+        JScrollPane scrollpane = new JScrollPane(testArea,
+                JScrollPane.VERTICAL_SCROLLBAR_ALWAYS,
+                JScrollPane.HORIZONTAL_SCROLLBAR_ALWAYS);
+        this.add(scrollpane, BorderLayout.CENTER);
 
         // コンポーネント等を設定
         this.addKeyListener(this);
         this.setFocusable(true);
-        this.setJMenuBar(menuBar);
         this.pack();
         this.setLocationRelativeTo(null);
         this.setVisible(true);
