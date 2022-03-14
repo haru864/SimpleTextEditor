@@ -47,15 +47,14 @@ public class TextFrame extends JFrame implements ActionListener, KeyListener {
 
         // テキスト入力スペースを作成
         TextArea testArea = new TextArea();
-        JScrollPane scrollpane = new JScrollPane(testArea,
-                JScrollPane.VERTICAL_SCROLLBAR_ALWAYS,
-                JScrollPane.HORIZONTAL_SCROLLBAR_ALWAYS);
-        this.add(scrollpane, BorderLayout.CENTER);
+        JScrollPane scrollPane = new JScrollPane(testArea);
+        scrollPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
+        this.add(scrollPane);
 
         // コンポーネント等を設定
         this.addKeyListener(this);
         this.setFocusable(true);
-        this.pack();
+        this.setSize(new Dimension(App.WIDTH, App.HEIGHT));
         this.setLocationRelativeTo(null);
         this.setVisible(true);
     }
