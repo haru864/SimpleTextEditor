@@ -13,7 +13,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-public class TextFrame extends JFrame implements ActionListener, KeyListener {
+public class TextFrame extends JFrame implements ActionListener {
     JMenuBar menuBar;
     JMenu fileMenu;
     JMenu settingMenu;
@@ -52,7 +52,6 @@ public class TextFrame extends JFrame implements ActionListener, KeyListener {
         this.add(scrollPane);
 
         // コンポーネント等を設定
-        this.addKeyListener(this);
         this.setFocusable(true);
         this.setSize(new Dimension(App.WIDTH, App.HEIGHT));
         this.setLocationRelativeTo(null);
@@ -70,31 +69,6 @@ public class TextFrame extends JFrame implements ActionListener, KeyListener {
         } else if (e.getSource() == setBackgroundColor) {
             System.out.println("setBackgroundColor");
         }
-    }
-
-    @Override
-    public void keyTyped(KeyEvent e) {
-    }
-
-    @Override
-    public void keyPressed(KeyEvent e) {
-        if ((e.getKeyCode() == KeyEvent.VK_O) && ((e.getModifiersEx() &
-                KeyEvent.CTRL_DOWN_MASK) != 0)) {
-            System.out.println("Ctrl + o");
-        } else if ((e.getKeyCode() == KeyEvent.VK_S) && ((e.getModifiersEx() &
-                KeyEvent.CTRL_DOWN_MASK) != 0)) {
-            System.out.println("Ctrl + s");
-        } else if ((e.getKeyCode() == KeyEvent.VK_C) && ((e.getModifiersEx() &
-                KeyEvent.CTRL_DOWN_MASK) != 0)) {
-            System.out.println("Ctrl + c");
-        } else if ((e.getKeyCode() == KeyEvent.VK_B) && ((e.getModifiersEx() &
-                KeyEvent.CTRL_DOWN_MASK) != 0)) {
-            System.out.println("Ctrl + b");
-        }
-    }
-
-    @Override
-    public void keyReleased(KeyEvent e) {
     }
 
     // ファビコン作成メソッド
