@@ -14,6 +14,7 @@ import java.util.Arrays;
 import java.util.List;
 
 public class TextFrame extends JFrame implements ActionListener {
+
     JMenuBar menuBar;
     JMenu fileMenu;
     JMenu settingMenu;
@@ -21,6 +22,7 @@ public class TextFrame extends JFrame implements ActionListener {
     JMenuItem saveItem;
     JMenuItem setCharColor;
     JMenuItem setBackgroundColor;
+    TextArea testArea;
 
     public TextFrame() {
         // ウィンドウサイズ、ファビコン等を定義
@@ -46,7 +48,7 @@ public class TextFrame extends JFrame implements ActionListener {
         this.setJMenuBar(menuBar);
 
         // テキスト入力スペースを作成
-        TextArea testArea = new TextArea();
+        testArea = new TextArea();
         JScrollPane scrollPane = new JScrollPane(testArea);
         scrollPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
         this.add(scrollPane);
@@ -65,7 +67,7 @@ public class TextFrame extends JFrame implements ActionListener {
         } else if (e.getSource() == saveItem) {
             System.out.println("save");
         } else if (e.getSource() == setCharColor) {
-            System.out.println("setCharColor");
+            TextArea.showDialogForCharColor();
         } else if (e.getSource() == setBackgroundColor) {
             System.out.println("setBackgroundColor");
         }
@@ -73,7 +75,7 @@ public class TextFrame extends JFrame implements ActionListener {
 
     // ファビコン作成メソッド
     public void setFabicon() {
-        ImageIcon icon = new ImageIcon("./src/pencil.png");
+        ImageIcon icon = new ImageIcon("./src/pic/pencil.png");
         this.setIconImage(icon.getImage());
     }
 

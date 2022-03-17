@@ -3,6 +3,8 @@ import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.event.*;
 
+import javax.swing.ImageIcon;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
@@ -11,6 +13,9 @@ import javax.swing.plaf.DimensionUIResource;
 import javax.swing.text.DefaultCaret;
 
 public class TextArea extends JTextArea implements KeyListener {
+
+    public Color charColor;
+    public Color backgroundColor;
 
     public TextArea() {
         super("Hello world!");
@@ -35,9 +40,9 @@ public class TextArea extends JTextArea implements KeyListener {
         } else if ((e.getKeyCode() == KeyEvent.VK_S) && ((e.getModifiersEx() &
                 KeyEvent.CTRL_DOWN_MASK) != 0)) {
             System.out.println("Ctrl + s");
-        } else if ((e.getKeyCode() == KeyEvent.VK_C) && ((e.getModifiersEx() &
+        } else if ((e.getKeyCode() == KeyEvent.VK_J) && ((e.getModifiersEx() &
                 KeyEvent.CTRL_DOWN_MASK) != 0)) {
-            System.out.println("Ctrl + c");
+            showDialogForCharColor();
         } else if ((e.getKeyCode() == KeyEvent.VK_B) && ((e.getModifiersEx() &
                 KeyEvent.CTRL_DOWN_MASK) != 0)) {
             System.out.println("Ctrl + b");
@@ -46,5 +51,26 @@ public class TextArea extends JTextArea implements KeyListener {
 
     @Override
     public void keyReleased(KeyEvent e) {
+    }
+
+    // 設定できる文字の色をダイアログで表示するメソッド
+    public static void showDialogForCharColor() {
+        String userDir = System.getProperty("user.dir");
+        System.out.println(userDir);
+        String[] colorList = new String[] { "黒", "シアン", "緑", "マゼンタ", "オレンジ", "ピンク", "白", "黄" };
+        // ImageIcon charColorIcon = new ImageIcon("");
+
+        int value = JOptionPane.showOptionDialog(App.textFrame,
+                "どの色にしますか？",
+                "文字色を変更する",
+                JOptionPane.YES_NO_OPTION,
+                JOptionPane.QUESTION_MESSAGE,
+                null,
+                colorList,
+                colorList[0]);
+    }
+
+    // 文字の色をセットするメソッド
+    public void setCharColor() {
     }
 }
