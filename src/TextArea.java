@@ -37,7 +37,7 @@ public class TextArea extends JTextArea implements KeyListener {
     public void keyPressed(KeyEvent e) {
         if ((e.getKeyCode() == KeyEvent.VK_O) && ((e.getModifiersEx() &
                 KeyEvent.CTRL_DOWN_MASK) != 0)) {
-            System.out.println("Ctrl + o");
+            App.textFrame.openFile();
         } else if ((e.getKeyCode() == KeyEvent.VK_S) && ((e.getModifiersEx() &
                 KeyEvent.CTRL_DOWN_MASK) != 0)) {
             System.out.println("Ctrl + s");

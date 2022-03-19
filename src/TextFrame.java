@@ -1,12 +1,19 @@
 import javax.swing.ImageIcon;
+import javax.swing.JFileChooser;
 import javax.swing.JFrame;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
+import javax.swing.JOptionPane;
 import javax.swing.JScrollPane;
 
 import java.awt.Dimension;
 import java.awt.event.*;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.io.FilenameFilter;
+import java.io.IOException;
 import java.awt.FlowLayout;
 import java.awt.BorderLayout;
 import java.util.ArrayList;
@@ -23,6 +30,7 @@ public class TextFrame extends JFrame implements ActionListener {
     JMenuItem setCharColor;
     JMenuItem setBackgroundColor;
     TextArea textArea;
+    File currentTextFile;
 
     public TextFrame() {
         // ウィンドウサイズ、ファビコン等を定義
@@ -63,7 +71,7 @@ public class TextFrame extends JFrame implements ActionListener {
     @Override
     public void actionPerformed(ActionEvent e) {
         if (e.getSource() == loadItem) {
-            System.out.println("load");
+            openFile();
         } else if (e.getSource() == saveItem) {
             System.out.println("save");
         } else if (e.getSource() == setCharColor) {
@@ -87,5 +95,36 @@ public class TextFrame extends JFrame implements ActionListener {
             menu.add(currItem);
         }
         menuBar.add(menu);
+    }
+
+    // ファイル選択・読み込みメソッド
+    public void openFile() {
+        JFileChooser fileChooser = new JFileChooser();
+        fileChooser.setAcceptAllFileFilterUsed(true);
+        var response = fileChooser.showOpenDialog(null);
+        // System.out.println(response);
+        var selectedFile = fileChooser.getSelectedFile();
+
+        var fileName = selectedFile.getName();
+        if (fileName.substring(fileName.lastIndexOf(".")).equals(".txt")) {
+            readTextFile(selectedFile);
+        } else {
+            JOptionPane.showMessageDialog(null, "テキストファイルを選択してください。");
+        }
+    }
+
+    // テキストファイル読み込みメソッド
+    public void readTextFile(File file) {
+        try {
+            FileReader fileReader = new FileReader(file);
+            int ch = 0;
+            while ((ch = fileReader.read()) != -1) {
+                System.out.println((char) ch);
+            }
+        } catch (FileNotFoundException e) {
+            // TODO: handle exception
+        } catch (IOException e) {
+            // TODO: handle exception
+        }
     }
 }
