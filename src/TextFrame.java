@@ -22,7 +22,7 @@ public class TextFrame extends JFrame implements ActionListener {
     JMenuItem saveItem;
     JMenuItem setCharColor;
     JMenuItem setBackgroundColor;
-    TextArea testArea;
+    TextArea textArea;
 
     public TextFrame() {
         // ウィンドウサイズ、ファビコン等を定義
@@ -48,8 +48,8 @@ public class TextFrame extends JFrame implements ActionListener {
         this.setJMenuBar(menuBar);
 
         // テキスト入力スペースを作成
-        testArea = new TextArea();
-        JScrollPane scrollPane = new JScrollPane(testArea);
+        textArea = new TextArea();
+        JScrollPane scrollPane = new JScrollPane(textArea);
         scrollPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
         this.add(scrollPane);
 
@@ -67,9 +67,9 @@ public class TextFrame extends JFrame implements ActionListener {
         } else if (e.getSource() == saveItem) {
             System.out.println("save");
         } else if (e.getSource() == setCharColor) {
-            TextArea.showDialogForCharColor();
+            textArea.changeCharColor();
         } else if (e.getSource() == setBackgroundColor) {
-            System.out.println("setBackgroundColor");
+            textArea.changeBackgroundColor();
         }
     }
 
