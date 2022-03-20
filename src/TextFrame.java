@@ -9,11 +9,14 @@ import javax.swing.JScrollPane;
 
 import java.awt.Dimension;
 import java.awt.event.*;
+import java.io.BufferedReader;
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.FilenameFilter;
 import java.io.IOException;
+import java.io.InputStreamReader;
 import java.awt.FlowLayout;
 import java.awt.BorderLayout;
 import java.util.ArrayList;
@@ -107,24 +110,26 @@ public class TextFrame extends JFrame implements ActionListener {
 
         var fileName = selectedFile.getName();
         if (fileName.substring(fileName.lastIndexOf(".")).equals(".txt")) {
-            readTextFile(selectedFile);
+            loadTextFile(selectedFile);
         } else {
             JOptionPane.showMessageDialog(null, "テキストファイルを選択してください。");
         }
     }
 
     // テキストファイル読み込みメソッド
-    public void readTextFile(File file) {
+    public void loadTextFile(File file) {
+        // System.out.println(System.getProperty("file.encoding"));
         try {
-            FileReader fileReader = new FileReader(file);
-            int ch = 0;
-            while ((ch = fileReader.read()) != -1) {
-                System.out.println((char) ch);
+            String line;
+            BufferedReader read = new BufferedReader(new InputStreamReader(new FileInputStream(file), "UTF-8"));
+            textArea.setText(null);
+            while ((line = read.readLine()) != null) {
+                System.out.println(line);
+                textArea.append(line + "\n");
             }
-        } catch (FileNotFoundException e) {
-            // TODO: handle exception
-        } catch (IOException e) {
-            // TODO: handle exception
+            read.close();
+        } catch (IOException ex) {
+            System.err.println(ex);
         }
     }
 }
