@@ -14,6 +14,7 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
+import java.io.FileWriter;
 import java.io.FilenameFilter;
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -45,7 +46,7 @@ public class TextFrame extends JFrame implements ActionListener {
         // メニューバーとボタンを定義
         menuBar = new JMenuBar();
         fileMenu = new JMenu("ファイル");
-        settingMenu = new JMenu("編集");
+        settingMenu = new JMenu("設定");
         loadItem = new JMenuItem("開く(Ctrl + o)");
         saveItem = new JMenuItem("保存(Ctrl + s)");
         setCharColor = new JMenuItem("文字の色を変更(Ctrl + c)");
@@ -76,7 +77,7 @@ public class TextFrame extends JFrame implements ActionListener {
         if (e.getSource() == loadItem) {
             openFile();
         } else if (e.getSource() == saveItem) {
-            System.out.println("save");
+            saveFile();
         } else if (e.getSource() == setCharColor) {
             textArea.changeCharColor();
         } else if (e.getSource() == setBackgroundColor) {
@@ -100,16 +101,27 @@ public class TextFrame extends JFrame implements ActionListener {
         menuBar.add(menu);
     }
 
-    // ファイル選択・読み込みメソッド
+    // テキストファイル判定メソッド
+    public boolean isTextFile(File file) {
+        var fileName = file.getName();
+        var index = fileName.lastIndexOf(".");
+        if (index == -1)
+            return false;
+
+        var fileExtension = fileName.substring(index);
+        if (fileExtension.equals(".txt"))
+            return true;
+        else
+            return false;
+    }
+
+    // テキストファイル選択・読み込みメソッド
     public void openFile() {
         JFileChooser fileChooser = new JFileChooser();
-        fileChooser.setAcceptAllFileFilterUsed(true);
         var response = fileChooser.showOpenDialog(null);
-        // System.out.println(response);
         var selectedFile = fileChooser.getSelectedFile();
 
-        var fileName = selectedFile.getName();
-        if (fileName.substring(fileName.lastIndexOf(".")).equals(".txt")) {
+        if (isTextFile(selectedFile)) {
             loadTextFile(selectedFile);
         } else {
             JOptionPane.showMessageDialog(null, "テキストファイルを選択してください。");
@@ -124,12 +136,32 @@ public class TextFrame extends JFrame implements ActionListener {
             BufferedReader read = new BufferedReader(new InputStreamReader(new FileInputStream(file), "UTF-8"));
             textArea.setText(null);
             while ((line = read.readLine()) != null) {
-                System.out.println(line);
+                // System.out.println(line);
                 textArea.append(line + "\n");
             }
             read.close();
         } catch (IOException ex) {
             System.err.println(ex);
+        }
+    }
+
+    // テキストファイル保存メソッド
+    public void saveFile() {
+        JFileChooser fileChooser = new JFileChooser();
+        var response = fileChooser.showSaveDialog(this);
+        var selectedFile = fileChooser.getSelectedFile();
+        // System.out.println(selectedFile);
+
+        try {
+            if (response == JFileChooser.APPROVE_OPTION && isTextFile(selectedFile)) {
+                FileWriter fw = new FileWriter(selectedFile);
+                fw.write(textArea.getText());
+                fw.close();
+            } else if (!isTextFile(selectedFile)) {
+                JOptionPane.showMessageDialog(null, "拡張子\".txt\"を指定してください。");
+            }
+        } catch (Exception ex) {
+            ex.printStackTrace();
         }
     }
 }

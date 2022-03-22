@@ -40,7 +40,7 @@ public class TextArea extends JTextArea implements KeyListener {
             App.textFrame.openFile();
         } else if ((e.getKeyCode() == KeyEvent.VK_S) && ((e.getModifiersEx() &
                 KeyEvent.CTRL_DOWN_MASK) != 0)) {
-            System.out.println("Ctrl + s");
+            App.textFrame.saveFile();
         } else if ((e.getKeyCode() == KeyEvent.VK_J) && ((e.getModifiersEx() &
                 KeyEvent.CTRL_DOWN_MASK) != 0)) {
             changeCharColor();
