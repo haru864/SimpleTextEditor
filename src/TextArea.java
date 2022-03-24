@@ -1,15 +1,8 @@
 import java.awt.Color;
-import java.awt.Dimension;
-import java.awt.FlowLayout;
 import java.awt.event.*;
 
-import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
-import javax.swing.JPanel;
-import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
-import javax.swing.Scrollable;
-import javax.swing.plaf.DimensionUIResource;
 import javax.swing.text.DefaultCaret;
 
 public class TextArea extends JTextArea implements KeyListener {
@@ -70,8 +63,6 @@ public class TextArea extends JTextArea implements KeyListener {
 
     // 設定できる色をダイアログで表示するメソッド
     public int showDialogForColor(String message, String title) {
-        // String userDir = System.getProperty("user.dir");
-        // System.out.println(userDir);
         int value = JOptionPane.showOptionDialog(App.textFrame,
                 message,
                 title,

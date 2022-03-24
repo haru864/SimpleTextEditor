@@ -10,16 +10,13 @@ import javax.swing.JScrollPane;
 import java.awt.Dimension;
 import java.awt.event.*;
 import java.io.BufferedReader;
+import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.FileReader;
-import java.io.FileWriter;
-import java.io.FilenameFilter;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStreamReader;
-import java.awt.FlowLayout;
-import java.awt.BorderLayout;
+import java.io.OutputStreamWriter;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -33,8 +30,10 @@ public class TextFrame extends JFrame implements ActionListener {
     JMenuItem saveItem;
     JMenuItem setCharColor;
     JMenuItem setBackgroundColor;
+    JMenuItem setCharCode;
     TextArea textArea;
     File currentTextFile;
+    public String charCode = AvailableCharCodeSet.defaultCharCode;
 
     public TextFrame() {
         // ウィンドウサイズ、ファビコン等を定義
@@ -51,11 +50,12 @@ public class TextFrame extends JFrame implements ActionListener {
         saveItem = new JMenuItem("保存(Ctrl + s)");
         setCharColor = new JMenuItem("文字の色を変更(Ctrl + c)");
         setBackgroundColor = new JMenuItem("背景色を変更(Ctrl + b)");
+        setCharCode = new JMenuItem("文字コードを変更");
 
         // メニューバーにボタンを作成
         List<JMenuItem> itemList = new ArrayList<>(Arrays.asList(loadItem, saveItem));
         setMenuToBar(fileMenu, itemList);
-        itemList = new ArrayList<>(Arrays.asList(setCharColor, setBackgroundColor));
+        itemList = new ArrayList<>(Arrays.asList(setCharColor, setBackgroundColor, setCharCode));
         setMenuToBar(settingMenu, itemList);
         this.setJMenuBar(menuBar);
 
@@ -82,6 +82,8 @@ public class TextFrame extends JFrame implements ActionListener {
             textArea.changeCharColor();
         } else if (e.getSource() == setBackgroundColor) {
             textArea.changeBackgroundColor();
+        } else if (e.getSource() == setCharCode) {
+            this.charCode = AvailableCharCodeSet.showAvailableCharCode();
         }
     }
 
@@ -118,7 +120,7 @@ public class TextFrame extends JFrame implements ActionListener {
     // テキストファイル選択・読み込みメソッド
     public void openFile() {
         JFileChooser fileChooser = new JFileChooser();
-        var response = fileChooser.showOpenDialog(null);
+        fileChooser.showOpenDialog(null);
         var selectedFile = fileChooser.getSelectedFile();
 
         if (isTextFile(selectedFile)) {
@@ -130,13 +132,11 @@ public class TextFrame extends JFrame implements ActionListener {
 
     // テキストファイル読み込みメソッド
     public void loadTextFile(File file) {
-        // System.out.println(System.getProperty("file.encoding"));
         try {
             String line;
-            BufferedReader read = new BufferedReader(new InputStreamReader(new FileInputStream(file), "UTF-8"));
+            BufferedReader read = new BufferedReader(new InputStreamReader(new FileInputStream(file), charCode));
             textArea.setText(null);
             while ((line = read.readLine()) != null) {
-                // System.out.println(line);
                 textArea.append(line + "\n");
             }
             read.close();
@@ -150,13 +150,13 @@ public class TextFrame extends JFrame implements ActionListener {
         JFileChooser fileChooser = new JFileChooser();
         var response = fileChooser.showSaveDialog(this);
         var selectedFile = fileChooser.getSelectedFile();
-        // System.out.println(selectedFile);
 
         try {
             if (response == JFileChooser.APPROVE_OPTION && isTextFile(selectedFile)) {
-                FileWriter fw = new FileWriter(selectedFile);
-                fw.write(textArea.getText());
-                fw.close();
+                BufferedWriter write = new BufferedWriter(
+                        new OutputStreamWriter(new FileOutputStream(selectedFile), charCode));
+                write.write(textArea.getText());
+                write.close();
             } else if (!isTextFile(selectedFile)) {
                 JOptionPane.showMessageDialog(null, "拡張子\".txt\"を指定してください。");
             }
