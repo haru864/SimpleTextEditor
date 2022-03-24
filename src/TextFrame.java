@@ -1,28 +1,22 @@
 import javax.swing.ImageIcon;
-import javax.swing.JFileChooser;
 import javax.swing.JFrame;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
-import javax.swing.JOptionPane;
+import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 
 import java.awt.Dimension;
 import java.awt.event.*;
-import java.io.BufferedReader;
-import java.io.BufferedWriter;
+import java.awt.BorderLayout;
 import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.InputStreamReader;
-import java.io.OutputStreamWriter;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
 public class TextFrame extends JFrame implements ActionListener {
 
+    JPanel bottomPanel;
     JMenuBar menuBar;
     JMenu fileMenu;
     JMenu settingMenu;
@@ -34,14 +28,14 @@ public class TextFrame extends JFrame implements ActionListener {
     TextArea textArea;
     File currentTextFile;
     FileManager fileManager = new FileManager();
-    public String charCode = AvailableCharCodeSet.defaultCharCode;
+    String charCode = AvailableCharCodeSet.defaultCharCode;
 
     public TextFrame() {
         // ウィンドウサイズ、ファビコン等を定義
         this.setTitle("Simple Text Editor");
+        setLayout(new BorderLayout());
         setFabicon();
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        // this.getContentPane().setPreferredSize(new Dimension(App.WIDTH, App.HEIGHT));
 
         // メニューバーとボタンを定義
         menuBar = new JMenuBar();
@@ -64,7 +58,11 @@ public class TextFrame extends JFrame implements ActionListener {
         textArea = new TextArea();
         JScrollPane scrollPane = new JScrollPane(textArea);
         scrollPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
-        this.add(scrollPane);
+        this.add(scrollPane, BorderLayout.CENTER);
+
+        // ボトムパネルを作成
+        bottomPanel = new BottomPanel();
+        this.add(bottomPanel, BorderLayout.SOUTH);
 
         // コンポーネント等を設定
         this.setFocusable(true);
@@ -84,7 +82,10 @@ public class TextFrame extends JFrame implements ActionListener {
         } else if (e.getSource() == setBackgroundColor) {
             textArea.changeBackgroundColor();
         } else if (e.getSource() == setCharCode) {
-            this.charCode = AvailableCharCodeSet.showAvailableCharCode();
+            var selectedCharCode = AvailableCharCodeSet.showAvailableCharCode();
+            ((BottomPanel) bottomPanel).charCodeLabel.setText(selectedCharCode);
+            this.charCode = AvailableCharCodeSet.getCharCode(selectedCharCode);
+            // System.out.println(selectedCharCode + ", " + this.charCode);
         }
     }
 

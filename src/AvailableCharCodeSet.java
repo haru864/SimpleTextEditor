@@ -47,7 +47,10 @@ public class AvailableCharCodeSet {
                 null,
                 AvailableCharCodeSet.charCodeList,
                 AvailableCharCodeSet.charCodeList[0]);
-        String charCode = AvailableCharCodeSet.charCodeList[value];
-        return AvailableCharCodeSet.charCodeMap.get(charCode);
+        return AvailableCharCodeSet.charCodeList[value];
+    }
+
+    public static String getCharCode(String charCodeString) {
+        return AvailableCharCodeSet.charCodeMap.get(charCodeString);
     }
 }

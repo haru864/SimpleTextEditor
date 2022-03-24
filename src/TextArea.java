@@ -7,8 +7,6 @@ import javax.swing.text.DefaultCaret;
 
 public class TextArea extends JTextArea implements KeyListener {
 
-    // public Color charColor;
-    // public Color backgroundColor;
     public String[] colorList = new String[] { "黒", "シアン", "緑", "マゼンタ", "オレンジ", "ピンク", "白", "黄" };
 
     public TextArea() {
