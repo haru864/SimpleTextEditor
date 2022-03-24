@@ -9,9 +9,6 @@ public class AvailableCharCodeSet {
     public static String defaultCharCode = "UTF8";
 
     static {
-        // charCodeList = new ArrayList<>(
-        // Arrays.asList("ASCII", "Shift-JIS", "SJIS", "EUC-JP", "JIS", "UTF-8",
-        // "UTF-16", "UTF-32"));
         charCodeList = new String[] { "ASCII", "Shift-JIS", "SJIS", "EUC-JP", "JIS", "UTF-8", "UTF-16", "UTF-32" };
 
         charCodeMap = new HashMap<>();

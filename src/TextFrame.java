@@ -33,6 +33,7 @@ public class TextFrame extends JFrame implements ActionListener {
     JMenuItem setCharCode;
     TextArea textArea;
     File currentTextFile;
+    FileManager fileManager = new FileManager();
     public String charCode = AvailableCharCodeSet.defaultCharCode;
 
     public TextFrame() {
@@ -75,9 +76,9 @@ public class TextFrame extends JFrame implements ActionListener {
     @Override
     public void actionPerformed(ActionEvent e) {
         if (e.getSource() == loadItem) {
-            openFile();
+            fileManager.openFile();
         } else if (e.getSource() == saveItem) {
-            saveFile();
+            fileManager.saveFile();
         } else if (e.getSource() == setCharColor) {
             textArea.changeCharColor();
         } else if (e.getSource() == setBackgroundColor) {
@@ -101,67 +102,5 @@ public class TextFrame extends JFrame implements ActionListener {
             menu.add(currItem);
         }
         menuBar.add(menu);
-    }
-
-    // テキストファイル判定メソッド
-    public boolean isTextFile(File file) {
-        var fileName = file.getName();
-        var index = fileName.lastIndexOf(".");
-        if (index == -1)
-            return false;
-
-        var fileExtension = fileName.substring(index);
-        if (fileExtension.equals(".txt"))
-            return true;
-        else
-            return false;
-    }
-
-    // テキストファイル選択・読み込みメソッド
-    public void openFile() {
-        JFileChooser fileChooser = new JFileChooser();
-        fileChooser.showOpenDialog(null);
-        var selectedFile = fileChooser.getSelectedFile();
-
-        if (isTextFile(selectedFile)) {
-            loadTextFile(selectedFile);
-        } else {
-            JOptionPane.showMessageDialog(null, "テキストファイルを選択してください。");
-        }
-    }
-
-    // テキストファイル読み込みメソッド
-    public void loadTextFile(File file) {
-        try {
-            String line;
-            BufferedReader read = new BufferedReader(new InputStreamReader(new FileInputStream(file), charCode));
-            textArea.setText(null);
-            while ((line = read.readLine()) != null) {
-                textArea.append(line + "\n");
-            }
-            read.close();
-        } catch (IOException ex) {
-            System.err.println(ex);
-        }
-    }
-
-    // テキストファイル保存メソッド
-    public void saveFile() {
-        JFileChooser fileChooser = new JFileChooser();
-        var response = fileChooser.showSaveDialog(this);
-        var selectedFile = fileChooser.getSelectedFile();
-
-        try {
-            if (response == JFileChooser.APPROVE_OPTION && isTextFile(selectedFile)) {
-                BufferedWriter write = new BufferedWriter(
-                        new OutputStreamWriter(new FileOutputStream(selectedFile), charCode));
-                write.write(textArea.getText());
-                write.close();
-            } else if (!isTextFile(selectedFile)) {
-                JOptionPane.showMessageDialog(null, "拡張子\".txt\"を指定してください。");
-            }
-        } catch (Exception ex) {
-            ex.printStackTrace();
-        }
     }
 }

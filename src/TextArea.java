@@ -30,10 +30,10 @@ public class TextArea extends JTextArea implements KeyListener {
     public void keyPressed(KeyEvent e) {
         if ((e.getKeyCode() == KeyEvent.VK_O) && ((e.getModifiersEx() &
                 KeyEvent.CTRL_DOWN_MASK) != 0)) {
-            App.textFrame.openFile();
+            App.textFrame.fileManager.openFile();
         } else if ((e.getKeyCode() == KeyEvent.VK_S) && ((e.getModifiersEx() &
                 KeyEvent.CTRL_DOWN_MASK) != 0)) {
-            App.textFrame.saveFile();
+            App.textFrame.fileManager.saveFile();
         } else if ((e.getKeyCode() == KeyEvent.VK_J) && ((e.getModifiersEx() &
                 KeyEvent.CTRL_DOWN_MASK) != 0)) {
             changeCharColor();
