@@ -1,18 +1,23 @@
-## Getting Started
+## SIMPLE TEXT EDITER 1.0
 
-Welcome to the VS Code Java world. Here is a guideline to help you get started to write Java code in Visual Studio Code.
+SIMPLE TEXT EDITOR is text editor like notepad on Windows.<br>
+Basic Operation like loading file and saving file can be done by shortcut command.<br>
+additionally, you can choose color of character and background.
 
 ## Folder Structure
 
-The workspace contains two folders by default, where:
+The workspace contains two important folders by default, where:
 
 - `src`: the folder to maintain sources
-- `lib`: the folder to maintain dependencies
+- `class`: the folder to maintain classfiles (Java 17)
 
-Meanwhile, the compiled output files will be generated in the `bin` folder by default.
+Meanwhile, the compiled output files will be also generated in the `bin` folder by default.
 
-> If you want to customize the folder structure, open `.vscode/settings.json` and update the related settings there.
+> I recommend that You do `java App` command in class folder by the below described JDK.
 
-## Dependency Management
-
-The `JAVA PROJECTS` view allows you to manage your dependencies. More details can be found [here](https://github.com/microsoft/vscode-java-dependency#manage-dependencies).
+## Recommend Environment
+```
+java 17.0.2 2022-01-18 LTS<br>
+Java(TM) SE Runtime Environment (build 17.0.2+8-LTS-86)<br>
+Java HotSpot(TM) 64-Bit Server VM (build 17.0.2+8-LTS-86, mixed mode, sharing)<br>
+```
