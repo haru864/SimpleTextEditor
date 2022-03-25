@@ -17,7 +17,7 @@ Meanwhile, the compiled output files will be also generated in the `bin` folder 
 
 ## Recommend Environment
 ```
-java 17.0.2 2022-01-18 LTS<br>
-Java(TM) SE Runtime Environment (build 17.0.2+8-LTS-86)<br>
-Java HotSpot(TM) 64-Bit Server VM (build 17.0.2+8-LTS-86, mixed mode, sharing)<br>
+java 17.0.2 2022-01-18 LTS
+Java(TM) SE Runtime Environment (build 17.0.2+8-LTS-86)
+Java HotSpot(TM) 64-Bit Server VM (build 17.0.2+8-LTS-86, mixed mode, sharing)
 ```
